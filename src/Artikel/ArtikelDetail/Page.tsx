@@ -2,7 +2,8 @@ import { useParams } from "react-router-dom";
 import { dataArtikel } from "../utils";
 import Layout from "../../Layout";
 export default function ArtikelDetailPage() {
-  const { id } = useParams();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { id }: any = useParams();
   const artikel = dataArtikel.find((item) => item.id === parseInt(id));
   if (!artikel) {
     return <p className="text-center mt-4">Artikel tidak ditemukan.</p>;

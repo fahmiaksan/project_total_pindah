@@ -5,6 +5,7 @@ interface Props {
   data: {
     image: string;
     text: string;
+    link: string;
   }[];
 }
 const ProfileIcons: React.FC<Props> = ({ data }) => {
