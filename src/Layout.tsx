@@ -1,16 +1,17 @@
 import React from "react";
 
 interface Props {
-  titleHeader: string;
+  titleHeader?: string;
   contentHeader?: string | React.ReactNode;
   content: string | React.ReactNode;
   background?: string;
   padding?: string;
   spacing?: string
+  grid?: string
 }
 export default function Layout(props: Props) {
 
-  const { titleHeader, padding, contentHeader, content, background, spacing } = props
+  const { titleHeader, padding, contentHeader, content, background, spacing, grid } = props
   return (
     <main className={`px-14 my-20 ${spacing ? spacing : 'space-y-12'}`}>
       <div className={`${background ? "space-y-0" : "space-y-10"}`}>
@@ -18,7 +19,7 @@ export default function Layout(props: Props) {
           {titleHeader}
         </p>
         <div className={`${background ? background : 'bg-[#F2EE6F]'} rounded-tr-2xl rounded-bl-2xl ${padding ? padding : 'px-11 py-9'}`}>
-          <div className="leading-9 tracking-widest">
+          <div className={`leading-9 tracking-widest ${grid ? grid : ''}`}>
             {contentHeader}
           </div>
         </div>

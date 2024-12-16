@@ -12,6 +12,10 @@ import HargaPage from "./Harga/Page";
 import MaterialPage from "./Material/Page";
 import GaleriPage from "./Galeri/Page";
 import { useEffect, useState } from "react";
+import KontakPage from "./Kontak/Page";
+import TestimoniPage from "./Testimoni/Page";
+import ArtikelPage from "./Artikel/Page";
+import ArtikelDetailPage from "./Artikel/ArtikelDetail/Page";
 
 export default function Pages() {
   const routes = [
@@ -25,6 +29,10 @@ export default function Pages() {
     { path: '/harga', element: <HargaPage /> },
     { path: '/material', element: <MaterialPage /> },
     { path: '/galeri', element: <GaleriPage /> },
+    { path: '/kontak', element: <KontakPage /> },
+    { path: '/testimoni', element: <TestimoniPage /> },
+    { path: '/artikel', element: <ArtikelPage /> },
+    { path: '/artikel/:id', element: <ArtikelDetailPage /> },
   ];
   const [loading, setLoading] = useState(false);
   useEffect(() => {

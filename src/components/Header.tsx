@@ -27,7 +27,6 @@ const submenu = [
 ]
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  console.log(navbar.length);
   return (
     <header className="bg-white shadow-md">
       <div className="mx-auto md:grid md:grid-cols-4 flex justify-between items-center pr-6 md:pr-0 relative">
@@ -53,10 +52,10 @@ const Header = () => {
               </p>
             </div>
             <div className="flex items-center space-x-4">
-              <FaFacebookF className="text-white" />
-              <FaTwitter className="text-white" />
-              <FaInstagram className="text-white" />
-              <FaLinkedinIn className="text-white" />
+              <FaFacebookF className="text-white" href="https://www.facebook.com/jasapindahtotal" />
+              <FaTwitter className="text-white" href="https://twitter.com/jasapindahtotal" />
+              <FaInstagram className="text-white" href="https://www.instagram.com/jasapindahtotal" />
+              <FaLinkedinIn className="text-white" href="https://www.linkedin.com/company/jasapindahtotal" />
             </div>
           </div>
           <div>
@@ -100,7 +99,7 @@ const Header = () => {
       </div>
       {/* Mobile Navigation */}
       {isOpen && (
-        <MobileNavbar navbar={navbar} />
+        <MobileNavbar navbar={navbar} submenu={submenu} />
       )}
     </header>
   );

@@ -1,5 +1,6 @@
 import { FaBuilding, FaHome, FaWarehouse } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 export default function Jumbotron() {
   return (
@@ -18,9 +19,9 @@ export default function Jumbotron() {
         </div>
         <div className="w-max">
           <div className="pl-5 pr-24 flex items-center justify-between rounded-full relative py-2 text-white bg-[#005CB5]">
-            <p>
+            <Link to="/profile">
               Lihat Company Profile
-            </p>
+            </Link>
             <div className="bg-[#A90000] absolute h-full px-3 right-0 flex items-center rounded-full">
               <IoIosArrowForward className="" color="white" />
             </div>
