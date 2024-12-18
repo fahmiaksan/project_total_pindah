@@ -12,25 +12,25 @@ export default function MaterialPage() {
         title: "Kecil",
         size: "48 X 45 X 36",
         price: "20.000",
-        background: "#F2EE6F",
+        background: "bg-[#F2EE6F]",
       },
       {
         title: "Sedang",
         size: "50 X 50 X 50",
         price: "25,000",
-        background: "#A90000",
+        background: "bg-[#A90000]",
       },
       {
         title: "Besar",
         size: "50 X 50 X 76",
         price: "30,000",
-        background: "#005CB5",
+        background: "bg-[#005CB5]",
       },
       {
         title: 'Besar Eks Tupperware',
         size: "59 x 39 x 50",
         price: "18,000",
-        background: "#08202b",
+        background: "bg-[#3E5879]",
       }
 
     ]
