@@ -5,17 +5,17 @@ export default function SideContact() {
   const data = [
     {
       icons: <FaWhatsapp size={30} className="text-white" />,
-      link: "https://wa.me/6281286666666",
+      link: "https://wa.me/6281210086633",
       name: "Whatsapp Rizal"
     },
     {
       icons: <FaWhatsapp size={30} className="text-white" />,
-      link: "https://wa.me/6281286666666",
+      link: "https://wa.me/6281290081625",
       name: "Whatsapp Siti"
     },
     {
       icons: <FaPhoneAlt size={30} className="text-white p-1" />,
-      link: "https://wa.me/6281286666666",
+      link: "https://wa.me/6281316346902",
       name: "Pindahan Luar Kota"
     },
   ];
