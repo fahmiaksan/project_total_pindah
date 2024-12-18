@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Key, JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../Layout";
 import axios from "axios";
 import { FiSend } from "react-icons/fi";
 import emailjs from "@emailjs/browser";
+import CarouselTestimoni from "../components/Atoms/CaraouselTestimoni";
 
 export default function TestimoniPage() {
 
   const [data, setData]: any = useState({
-    nameReviews: [],
+    author: [],
     ratings: [],
     reviews: [],
   });
@@ -100,30 +101,7 @@ export default function TestimoniPage() {
       background="bg-white"
       spacing="space-y-0"
       contentHeader={
-        <div className="grid h-max md:grid-cols-3 grid-cols-2">
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          {data.nameReviews.map((_nameItem: any, index: Key | null | undefined) => (
-            <div
-              key={index}
-              className="flex flex-col pt-10 space-y-4 items-center p-4 mb-4 bg-white"
-            >
-              <p className="text-yellow-500 ">
-                {
-                  data.ratings[Number(index)]?.rating === "5" ? "⭐⭐⭐⭐⭐" : data.ratings[Number(index)]?.rating === "4" ? "⭐⭐⭐⭐" : data.ratings[Number(index)]?.rating === "3" ? "⭐⭐⭐" : data.ratings[Number(index)]?.rating === "2" ? "⭐⭐" : data.ratings[Number(index)]?.rating === "1" && "⭐"
-
-                }
-              </p>
-              <p className="mt-2 text-gray-700 leading-relaxed text-center">
-                "{data.reviews[Number(index)]?.review}"
-              </p>
-            </div>
-          ))}
-          {
-            data.nameReviews.map((nameItem: { name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; }) => (
-              <h2 className="text-xl text-center font-semibold">{nameItem.name}</h2>
-            ))
-          }
-        </div>
+        <CarouselTestimoni data={data} />
       }
       content={
         <div>
