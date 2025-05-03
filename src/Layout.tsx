@@ -1,4 +1,6 @@
 import React from "react";
+import Breadcrumbs from "./components/Breadcrumbs";
+import SEO from "./components/SEO";
 
 interface Props {
   titleHeader?: string;
@@ -6,29 +8,76 @@ interface Props {
   content: string | React.ReactNode;
   background?: string;
   padding?: string;
-  spacing?: string
-  grid?: string
+  spacing?: string;
+  grid?: string;
+  seo?: {
+    title: string;
+    description: string;
+    keywords?: string;
+    type?: string;
+    schema?: {
+      '@context': string;
+      '@type': string;
+      [key: string]: any;
+    };
+  };
 }
-export default function Layout(props: Props) {
 
-  const { titleHeader, padding, contentHeader, content, background, spacing, grid } = props
+export default function Layout(props: Props) {
+  const {
+    titleHeader,
+    padding,
+    contentHeader,
+    content,
+    background,
+    spacing,
+    grid,
+    seo = {
+      title: titleHeader || 'Jasa Pindahan Profesional',
+      description: 'Layanan jasa pindahan profesional untuk rumah, apartemen, kantor, dan pindahan luar kota',
+      keywords: 'jasa pindahan, pindahan rumah, pindahan kantor, pindahan apartemen, pindahan luar kota',
+      type: 'website'
+    }
+  } = props;
+
   return (
-    <main className={`px-14 my-20 ${spacing ? spacing : 'space-y-12'}`}>
-      <div className={`${background ? "space-y-0" : "space-y-10"}`}>
-        <p className="lg:text-5xl md:text-4xl text-3xl font-bold text-black lg:tracking-widest">
-          {titleHeader}
-        </p>
-        <div className={`${background ? background : 'bg-[#F2EE6F]'} rounded-tr-2xl rounded-bl-2xl ${padding ? padding : 'px-11 py-9'}`}>
-          <div className={`leading-9 tracking-widest ${grid ? grid : ''}`}>
-            {contentHeader}
-          </div>
+    <>
+      <SEO {...seo} />
+      <main className={`
+        container mx-auto 
+        px-3 sm:px-6 md:px-8 lg:px-12 
+        my-8 sm:my-12 md:my-16 lg:my-20 
+        ${spacing ? spacing : 'space-y-8 sm:space-y-12'}
+      `}>
+        <Breadcrumbs />
+
+        <div className={`${background ? "space-y-0" : "space-y-6 sm:space-y-8 md:space-y-10"}`}>
+          {titleHeader && (
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black lg:tracking-widest">
+              {titleHeader}
+            </h1>
+          )}
+
+          {contentHeader && (
+            <div className={`
+              ${background ? background : 'bg-[#F2EE6F]'} 
+              rounded-tr-xl rounded-bl-xl 
+              ${padding ? padding : 'px-4 sm:px-6 md:px-8 py-6 sm:py-9'}
+            `}>
+              <div className={`
+                leading-relaxed tracking-wide text-base sm:text-lg
+                ${grid ? grid : ''}
+              `}>
+                {contentHeader}
+              </div>
+            </div>
+          )}
         </div>
-      </div>
-      <div>
-        {
-          content
-        }
-      </div>
-    </main>
-  )
+
+        <div className="mt-8 md:mt-12">
+          {content}
+        </div>
+      </main>
+    </>
+  );
 };

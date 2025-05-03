@@ -1,57 +1,137 @@
 import { useParams } from "react-router-dom";
 import { dataArtikel } from "../utils";
 import Layout from "../../Layout";
+
 export default function ArtikelDetailPage() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { id }: any = useParams();
-  const artikel = dataArtikel.find((item) => item.id === parseInt(id));
+  const { slug } = useParams();
+  const artikel = dataArtikel.find((item) => item.slug === slug);
+
   if (!artikel) {
-    return <p className="text-center mt-4">Artikel tidak ditemukan.</p>;
+    return (
+      <Layout
+        titleHeader="Artikel Tidak Ditemukan"
+        content={
+          <div className="text-center py-12">
+            <p className="text-gray-600">Maaf, artikel yang Anda cari tidak ditemukan.</p>
+          </div>
+        }
+      />
+    );
   }
+
   return (
     <Layout
-      background="bg-white"
+      titleHeader={artikel.title}
+      seo={{
+        title: `${artikel.title} | Total Pindah`,
+        description: artikel.description,
+        keywords: `artikel jasa pindahan, ${artikel.title.toLowerCase()}, tips pindahan, panduan pindahan`,
+        type: "article"
+      }}
       content={
-        <div>
-          <img src={artikel.image} className="w-full object-cover" alt={artikel.content} />
-          {
-            parseInt(id) === 2 ? (
-              <>
-                <p className="text-5xl pt-20 mb-10 tracking-wider  font-bold">Tips dan Trik Memilih Jasa Angkut Rumah yang Tepat</p>
-                <div className="space-y-5 leading-7">
-                  <p>Memilih jasa angkut rumah yang tepat adalah kunci keberhasilan pindahan Anda. Dengan memilih perusahaan yang tepat, Anda dapat memastikan barang-barang Anda aman sampai tujuan dan proses pindahan berjalan lancar. Namun, dengan banyaknya pilihan jasa angkut yang tersedia, memilih satu yang tepat bisa menjadi tugas yang membingungkan. Berikut beberapa tips dan trik yang dapat Anda gunakan untuk membantu Anda memilih jasa angkut rumah yang tepat:</p>
-                  <p><strong>Pertama,</strong> lakukan riset yang menyeluruh. Cari tahu reputasi perusahaan melalui ulasan pelanggan, baik di situs web mereka maupun di platform ulasan online. Perhatikan juga pengalaman perusahaan dalam menangani berbagai jenis pindahan, baik itu pindahan rumah, apartemen, atau kantor. Selain itu, jangan ragu untuk meminta rekomendasi dari teman atau keluarga yang pernah menggunakan jasa angkut sebelumnya.</p>
-                  <p><strong>Kedua,</strong> bandingkan harga dan layanan yang ditawarkan. Setiap perusahaan jasa angkut biasanya memiliki paket layanan yang berbeda-beda dengan harga yang bervariasi. Bandingkan harga dari beberapa perusahaan dan pastikan Anda memahami apa yang termasuk dalam setiap paket. Selain harga, perhatikan juga layanan tambahan yang ditawarkan, seperti asuransi pengiriman, pengemasan barang, dan bongkar muat.</p>
-                  <p><strong>Terakhir,</strong> pastikan perusahaan memiliki izin operasional dan asuransi. Sebuah perusahaan jasa angkut yang terpercaya pasti memiliki izin operasional yang sah dan asuransi untuk melindungi barang-barang Anda selama proses pengiriman. Dengan adanya asuransi, Anda tidak perlu khawatir jika terjadi kerusakan atau kehilangan barang selama dalam perjalanan.</p>
-                  <p>Dengan mengikuti tips-tips di atas, Anda dapat memilih jasa angkut rumah yang tepat dan memastikan pindahan Anda berjalan lancar tanpa hambatan.</p>
-                </div>
-              </>) : (
-              <>
-                <p className="text-5xl pt-20 mb-10 tracking-wider  font-bold">Pindahan Rumah Tanpa Ribet? Serahkan pada Kami!
+        <article className="max-w-4xl mx-auto">
+          {/* Article Header */}
+          <div className="mb-8">
+            <div className="flex items-center text-sm text-gray-500 space-x-4 mb-6">
+              <span>{new Date(artikel.date).toLocaleDateString('id-ID', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}</span>
+              <span>•</span>
+              <span>{artikel.author}</span>
+            </div>
+            <div className="aspect-w-16 aspect-h-9 mb-8">
+              <img
+                src={artikel.image}
+                alt={artikel.title}
+                className="w-full h-[400px] object-cover rounded-lg shadow-lg"
+              />
+            </div>
+            <p className="text-lg text-gray-600 leading-relaxed mb-8">
+              {artikel.description}
+            </p>
+          </div>
+
+          {/* Article Content */}
+          <div className="prose prose-lg max-w-none">
+            {artikel.content.split('\n').map((paragraph, index) => (
+              paragraph.trim() && (
+                <p key={index} className="mb-4 text-gray-700 leading-relaxed">
+                  {paragraph.trim()}
                 </p>
-                <div className="space-y-5 leading-7">
-                  <p>Pindahan rumah seringkali menjadi momen yang melelahkan dan merepotkan. Namun, dengan layanan jasa angkut profesional, proses pindahan Anda bisa menjadi jauh lebih mudah dan lancar. Kami memahami bahwa memindahkan seluruh barang dari satu tempat ke tempat lain bukanlah tugas yang sederhana. Mulai dari perencanaan, pengemasan, hingga pemindahan barang memerlukan waktu, tenaga, dan keahlian khusus. Jika tidak ditangani dengan benar, pindahan rumah bisa menjadi sumber stres yang tidak diinginkan. Oleh karena itu, mempercayakan proses pindahan kepada jasa angkut profesional adalah solusi yang tepat untuk Anda.</p>
-                  <p>Kenapa Harus Menggunakan Jasa Angkut Profesional?</p>
-                  <p>
-                    <strong>1. Hemat Waktu dan Tenaga</strong><br />
-                  </p>
-                  <p>
-                    Mengemas barang satu per satu, memindahkannya, dan membawanya ke lokasi tujuan membutuhkan banyak waktu dan tenaga. Jika Anda melakukan semuanya sendiri, ada risiko kelelahan dan kurangnya efisiensi. Dengan bantuan jasa angkut profesional, tim berpengalaman akan membantu Anda mengemas, memuat, dan mengangkut barang dengan cepat. Anda hanya perlu memantau prosesnya tanpa perlu khawatir bekerja terlalu keras.</p>
-                  <p>
-                    <strong>2. Keamanan Barang Terjamin
-                    </strong>
-                  </p>
-                  <p>Salah satu kekhawatiran terbesar saat pindahan adalah keamanan barang-barang Anda, terutama barang berharga atau rentan rusak seperti perabotan, barang elektronik, dan barang pecah belah. Layanan jasa angkut profesional menggunakan teknik pengemasan yang aman dan peralatan khusus untuk memastikan barang Anda tetap dalam kondisi sempurna selama proses pengiriman. Tidak hanya itu, perusahaan terpercaya biasanya menyediakan asuransi yang akan melindungi barang Anda jika terjadi kerusakan atau kehilangan.</p>
-                  <p>
-                    <strong>3. Peralatan Lengkap dan Tim Berpengalaman</strong>
-                  </p>
-                  <p>Jasa angkut profesional memiliki peralatan lengkap, seperti kendaraan khusus angkut, alat bantu pengangkutan, dan material pengemasan berkualitas. Selain itu, tim yang berpengalaman tahu cara menangani berbagai jenis barang, mulai dari barang besar dan berat hingga barang kecil yang memerlukan perlakuan khusus. Keahlian mereka membuat proses pindahan menjadi lebih cepat dan efisien.</p>
+              )
+            ))}
+          </div>
+
+          {/* Share and Navigation */}
+          <div className="mt-12 pt-8 border-t border-gray-200">
+            <div className="flex justify-between items-center">
+              <div className="text-sm text-gray-500">
+                Bagikan artikel ini:
+                <div className="flex space-x-4 mt-2">
+                  <button
+                    onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(window.location.href)}`, '_blank')}
+                    className="text-green-600 hover:text-green-700"
+                  >
+                    WhatsApp
+                  </button>
+                  <button
+                    onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank')}
+                    className="text-blue-600 hover:text-blue-700"
+                  >
+                    Facebook
+                  </button>
                 </div>
-              </>
-            )
-          }
-        </div>
+              </div>
+              <a
+                href="/artikel"
+                className="inline-flex items-center text-blue-600 hover:text-blue-700"
+              >
+                <svg className="w-4 h-4 mr-2 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+                Kembali ke Artikel
+              </a>
+            </div>
+          </div>
+
+          {/* Related Articles */}
+          <div className="mt-12 pt-8 border-t border-gray-200">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Artikel Terkait</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {dataArtikel
+                .filter(item => item.slug !== slug)
+                .slice(0, 2)
+                .map(artikel => (
+                  <a
+                    key={artikel.id}
+                    href={`/artikel/${artikel.slug}`}
+                    className="group block"
+                  >
+                    <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+                      <div className="relative h-48">
+                        <img
+                          src={artikel.image}
+                          alt={artikel.title}
+                          className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300 mb-2">
+                          {artikel.title}
+                        </h3>
+                        <p className="text-gray-600 line-clamp-2">
+                          {artikel.description}
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                ))}
+            </div>
+          </div>
+        </article>
       }
     />
-  )
-};
+  );
+}

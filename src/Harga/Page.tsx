@@ -9,10 +9,35 @@ export default function HargaPage() {
     "Pemindahan piano",
     "Pemindahan patung",
     "Pemindahan lampu kristal"
-  ]
+  ];
+
+  const priceSchema = {
+    "@context": "https://schema.org",
+    "@type": "PriceSpecification",
+    "name": "Harga Jasa Pindahan Total Pindah",
+    "description": "Biaya jasa pindahan dihitung berdasarkan volume barang dalam meter kubik (M3)",
+    "price": "400000",
+    "priceCurrency": "IDR",
+    "unitText": "per meter kubik",
+    "validFrom": "2024-01-01",
+    "priceType": "Negotiable",
+    "additionalProperty": {
+      "@type": "PropertyValue",
+      "name": "Special Handling",
+      "value": "Biaya tambahan untuk penanganan khusus (berat/besar/bongkar-pasang)"
+    }
+  };
+
   return (
     <Layout
       titleHeader="Harga Layanan"
+      seo={{
+        title: "Daftar Harga Jasa Pindahan - Total Pindah",
+        description: "Informasi lengkap harga jasa pindahan Total Pindah. Harga dihitung per meter kubik (M3) dengan sistem survey. Tersedia layanan special handling untuk barang khusus.",
+        keywords: "harga pindahan, biaya jasa pindahan, tarif pindahan rumah, harga special handling, kalkulasi biaya pindahan",
+        type: "product",
+        schema: priceSchema
+      }}
       contentHeader={
         <>
           <p className="text-left font-bold">
@@ -34,10 +59,7 @@ export default function HargaPage() {
       content={
         <Card
           title="Ketentuan Lain"
-          flex_direction="flex-col-reverse"
-          benefit={
-            benefit
-          }
+          benefit={benefit}
           content={
             "Untuk barang barang tertentu dapat dikenakan biaya Special handling, yaitu untuk proses pemindahan barang yang memerlukan penanganan khusus (berat/besar/bongkar-pasang)"
           }
@@ -48,6 +70,5 @@ export default function HargaPage() {
       background="bg-white"
       padding="px-0 py-9"
     />
-
-  )
+  );
 }

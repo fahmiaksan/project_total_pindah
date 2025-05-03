@@ -1,4 +1,3 @@
-
 export default function Testimonial() {
   const data = [
     {
@@ -23,13 +22,13 @@ export default function Testimonial() {
   ]
   return (
     <div className="bg-[#F2EE6F] w-full">
-      <div className="grid gap-10 px-44 py-20 place-content-center grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-8 sm:gap-10 px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-16 md:py-20 place-content-center grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         {
           data.map((item, index) => (
-            <div key={index} className="flex w-full space-y-5 flex-col">
-              <img alt="Pindahan Rumah" className="w-full" width={200} height={200} src={item.image} />
-              <strong className=" text-xl text-[#0C142E]">{item.name}</strong>
-              <p className="text-sm text-[#0C142E]">{item.description}</p>
+            <div key={index} className="flex w-full space-y-4 sm:space-y-5 flex-col">
+              <img alt={item.name} className="w-full rounded-lg hover:shadow-lg transition-shadow duration-300" width={200} height={200} src={item.image} />
+              <strong className="text-lg sm:text-xl text-[#0C142E]">{item.name}</strong>
+              <p className="text-sm sm:text-base text-[#0C142E] leading-relaxed">{item.description}</p>
             </div>
           ))
         }

@@ -23,10 +23,51 @@ export default function PindahanRumah() {
     "Trucking",
     "Unloading",
     "Unpacking",
-  ]
+  ];
+
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Jasa Pindahan Rumah Profesional",
+    "description": "Layanan pindahan rumah profesional meliputi Survey, Packing, Loading, Trucking, Unloading, Unpacking, dan penataan kembali di lokasi tujuan",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "Total Pindah"
+    },
+    "areaServed": "Indonesia",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Paket Layanan Pindahan Rumah",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "name": "Paket Full Service",
+          "description": "Layanan pindahan lengkap termasuk penataan di lokasi tujuan"
+        },
+        {
+          "@type": "Offer",
+          "name": "Paket Bisnis",
+          "description": "Layanan pindahan tanpa penataan di lokasi tujuan"
+        },
+        {
+          "@type": "Offer",
+          "name": "Paket Ekonomi",
+          "description": "Layanan pindahan dengan berbagai pilihan armada"
+        }
+      ]
+    }
+  };
+
   return (
     <Layout
       titleHeader="Jasa Pindahan Rumah Profesional"
+      seo={{
+        title: "Jasa Pindahan Rumah Profesional - Layanan Pindah Rumah Aman & Terpercaya",
+        description: "Layanan jasa pindahan rumah profesional dengan paket lengkap: Survey, Packing, Loading, Trucking, Unloading, Unpacking, dan penataan ulang. Tersedia paket Full Service, Bisnis, dan Ekonomi.",
+        keywords: "jasa pindahan rumah, pindah rumah, layanan pindahan rumah, paket pindahan rumah, pindahan rumah profesional",
+        type: "service",
+        schema: serviceSchema
+      }}
       contentHeader={
         <p>
           "Total Pindah hadir untuk memberi kemudahan jasa layanan pindahan yang akan membantu anda sehingga pindahan rumah, apartemen dan kost menjadi terasa mudah dan menyenangkan. karena kami mengerti betapa waktu begitu berharga bagi anda untuk itu kami menawarkan jasa Pindahan yang meliputi Survey, Packing, Loading, Trucking, Unloading, Unpacking, dan penataan kembali dilokasi tujuan. anda cukup menghubungi kami dan kami akan mengurus segala kerepotan pindahan bagi anda
@@ -64,7 +105,6 @@ export default function PindahanRumah() {
                   <strong className="font-bold text-[#0C142E]">tanpa ribet, </strong>
                   karena kami akan mengurus segalanya untuk Anda. Hubungi kami sekarang untuk solusi pindahan terbaik!
                 </p>
-
               }
               title="Paket Full Service" />
             <Card
@@ -92,5 +132,5 @@ export default function PindahanRumah() {
         </div>
       }
     />
-  )
+  );
 };
