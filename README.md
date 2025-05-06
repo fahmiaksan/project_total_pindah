@@ -570,59 +570,6 @@ Struktur:
 </div>
 ```
 
-### 10. Tips Penting untuk Semua Komponen:
-1. **Props Drilling Hindari:**
-   ```tsx
-   // ❌ Jangan:
-   <GrandParent>
-     <Parent data={data}>
-       <Child data={data} />
-     </Parent>
-   </GrandParent>
-
-   // ✅ Lebih baik:
-   const DataContext = createContext();
-   ```
-
-2. **State Management:**
-   ```tsx
-   // Local state: pakai useState
-   const [count, setCount] = useState(0);
-
-   // Complex state: pakai useReducer
-   const [state, dispatch] = useReducer(reducer, initialState);
-   ```
-
-3. **Responsive Design:**
-   ```tsx
-   // Pakai Tailwind breakpoints
-   <div className="
-     w-full          // Di mobile
-     md:w-1/2       // Di tablet
-     lg:w-1/3       // Di desktop
-   ">
-   ```
-
-4. **Loading States:**
-   ```tsx
-   // Selalu handle loading
-   {isLoading ? (
-     <LoadingSpinner />
-   ) : (
-     <Content />
-   )}
-   ```
-
-5. **Error Handling:**
-   ```tsx
-   // Selalu handle error
-   {error ? (
-     <ErrorMessage message={error} />
-   ) : (
-     <Content />
-   )}
-```
-
 ## 📝 Update Terbaru (May 2025)
 
 ### 1. Penambahan Halaman 404 Not Found
