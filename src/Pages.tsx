@@ -17,6 +17,7 @@ import TestimoniPage from "./Testimoni/Page";
 import ArtikelPage from "./Artikel/Page";
 import ArtikelDetailPage from "./Artikel/ArtikelDetail/Page";
 import PanduanMemilihJasaPindahan from "./articles/PanduanMemilihJasaPindahan";
+import NotFound from './components/NotFound';
 
 export default function Pages() {
   const routes = [
@@ -35,6 +36,7 @@ export default function Pages() {
     { path: '/artikel', element: <ArtikelPage /> },
     { path: '/artikel/:id', element: <ArtikelDetailPage /> },
     { path: '/artikel/panduan-memilih-jasa-pindahan', element: <PanduanMemilihJasaPindahan /> },
+    { path: '*', element: <NotFound /> },
   ];
   const [loading, setLoading] = useState(false);
   useEffect(() => {

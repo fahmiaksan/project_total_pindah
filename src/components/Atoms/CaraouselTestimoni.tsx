@@ -4,11 +4,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 
-interface CarouselProps {
+interface Props {
   data: {
-    author: any,
-    ratings: any,
-    reviews: any,
+    author: string[];
+    ratings: number[];
+    reviews: string[];
   };
 }
 
@@ -44,20 +44,17 @@ const PrevArrow = (props: Arrow) => {
   );
 };
 
-const CarouselTestimoni: React.FC<CarouselProps> = ({ data }) => {
+export default function CarouselTestimoni(props: Props) {
+  const { data } = props;
+
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 3,
-    slidesToScroll: 3,
-    draggable: true,
-    swipe: true,
-    touchMove: true,
-    arrows: true,
+    slidesToScroll: 1,
     autoplay: true,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
+    autoplaySpeed: 3000,
     responsive: [
       {
         breakpoint: 1024,
@@ -67,41 +64,45 @@ const CarouselTestimoni: React.FC<CarouselProps> = ({ data }) => {
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 640,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
         },
       },
-
-    ]
+    ],
   };
 
   return (
-    <div className="flex h-max w-full">
-      <Slider {...settings} className="w-full">
-        {data.author.map((_nameItem: any, index: Key | null | undefined) => (
-          <div
-            key={index}
-            className="flex col-span-3 flex-col w-full pt-10 space-y-4 items-center p-4 mb-4 bg-white"
-          >
-            <div className=" flex flex-col h-[250px] items-center">
-              <p className="text-yellow-500 ">
-                {
-                  data.ratings[Number(index)]?.rating === "5" ? "⭐⭐⭐⭐⭐" : data.ratings[Number(index)]?.rating === "4" ? "⭐⭐⭐⭐" : data.ratings[Number(index)]?.rating === "3" ? "⭐⭐⭐" : data.ratings[Number(index)]?.rating === "2" ? "⭐⭐" : data.ratings[Number(index)]?.rating === "1" && "⭐"
+    <div className="w-full">
+      <Slider {...settings}>
+        {data.author.map((author, index) => (
+          <div key={index} className="px-4">
+            <div className="bg-white rounded-lg shadow-md p-6 min-h-[300px] flex flex-col">
+              {/* Rating Stars */}
+              <div className="flex mb-4">
+                {[...Array(data.ratings[index])].map((_, i) => (
+                  <span key={i} className="text-yellow-400 text-xl">★</span>
+                ))}
+              </div>
 
-                }
-              </p>
-              <p className="mt-2 text-gray-700 leading-relaxed text-center">
-                "{data.reviews[Number(index)]?.review}"
-              </p>
+              {/* Review Text */}
+              <div className="flex-grow">
+                <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-6">
+                  "{data.reviews[index]}"
+                </p>
+              </div>
+
+              {/* Author Name */}
+              <div className="mt-auto pt-4 border-t border-gray-100">
+                <p className="font-semibold text-gray-800 text-center">
+                  {author}
+                </p>
+              </div>
             </div>
-            <h2 className="text-xl text-center font-semibold">{_nameItem.name}</h2>
           </div>
         ))}
       </Slider>
     </div>
   );
-};
-
-export default CarouselTestimoni;
+}

@@ -1,128 +1,143 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
+import { useReducer, useEffect } from "react";
 import Layout from "../Layout";
 import axios from "axios";
 import { FiSend } from "react-icons/fi";
 import emailjs from "@emailjs/browser";
 import CarouselTestimoni from "../components/Atoms/CaraouselTestimoni";
+import { formReducer, initialState } from "../reducers/formReducer";
+import { LoadingSpinner } from "../components/LoadingSpinner";
+import { toast } from "react-toastify";
 
 export default function TestimoniPage() {
+  const [state, dispatch] = useReducer(formReducer, initialState);
 
-  const [data, setData]: any = useState({
-    author: [],
-    ratings: [],
-    reviews: [],
-  });
-
-
-  const [rating, setRating] = useState(0); // State untuk menyimpan jumlah bintang
-  const [hover, setHover] = useState(0);   // State untuk efek hover
-  const [feedback, setFeedback] = useState("");
-
-  const [loading, setLoading] = useState<boolean>(true);
-  const [disabled, setDisabled] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
-
-
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const lastSubmitTime = localStorage.getItem("lastSubmitTime");
-    const lastSubmit = parseInt(localStorage.getItem("lastSubmitTime") as string, 10);
-
+    const lastSubmit = parseInt(lastSubmitTime || "0", 10);
     const currentTime = new Date().getTime();
 
-    if (lastSubmitTime && currentTime - lastSubmit < 86400000) { // 24 jam dalam milidetik
-      alert("Anda hanya dapat mengirim feedback sekali dalam 1 hari.");
+    if (lastSubmitTime && currentTime - lastSubmit < 86400000) {
+      toast.error("Anda hanya dapat mengirim feedback sekali dalam 1 hari.");
       return;
     }
 
-    setDisabled(true);
+    dispatch({ type: 'SET_DISABLED', payload: true });
 
-    const templateParams = {
-      rating: rating,
-      feedback: feedback,
-    };
+    try {
+      const templateParams = {
+        rating: state.rating,
+        feedback: state.feedback,
+      };
 
-    emailjs
-      .send(
-        "service_d68fix7", // ID Service dari EmailJS
-        "template_w7kck48", // ID Template EmailJS
+      const response = await emailjs.send(
+        "service_d68fix7",
+        "template_w7kck48",
         templateParams,
-        "qeg1I-wwbnPdtDkAk" // ID User EmailJS
-      )
-      .then(
-        (response) => {
-          console.log("SUCCESS!", response.status, response.text);
-          alert("Feedback berhasil dikirim!");
-          // Simpan waktu submit ke localStorage
-          localStorage.setItem("lastSubmitTime", String(new Date().getTime()));
-          setFeedback("");
-          setRating(0);
-          setDisabled(false);
-        },
-        (error) => {
-          console.log("FAILED...", error);
-          alert("Gagal mengirim feedback.");
-          setFeedback("");
-          setDisabled(false);
-        }
+        "qeg1I-wwbnPdtDkAk"
       );
+
+      console.log("SUCCESS!", response.status, response.text);
+      toast.success("Feedback berhasil dikirim!");
+      localStorage.setItem("lastSubmitTime", String(new Date().getTime()));
+
+      dispatch({ type: 'RESET_FORM' });
+    } catch (error) {
+      console.error("FAILED...", error);
+      toast.error("Gagal mengirim feedback.");
+      dispatch({ type: 'SET_ERROR', payload: 'Gagal mengirim feedback' });
+    } finally {
+      dispatch({ type: 'SET_DISABLED', payload: false });
+    }
   };
 
   useEffect(() => {
-    // Fungsi untuk fetch data dari API
     const fetchReviews = async () => {
       try {
-        setLoading(true);
+        dispatch({ type: 'SET_LOADING', payload: true });
         const response = await axios.get("./reviews.json");
-        setData(response.data); // Set data ke state
-        setLoading(false);
+
+        // Transform the data structure
+        const transformedData = {
+          author: response.data.author.map((a: { name: string }) => a.name),
+          ratings: response.data.ratings.map((r: { rating: string }) => Number(r.rating)),
+          reviews: response.data.reviews.map((r: { review: string }) => r.review)
+        };
+
+        dispatch({ type: 'SET_DATA', payload: transformedData });
       } catch (err) {
         console.error("Error fetching data:", err);
-        setError("Gagal mengambil data. Silakan coba lagi.");
-        setLoading(false);
+        dispatch({ type: 'SET_ERROR', payload: 'Gagal mengambil data. Silakan coba lagi.' });
+      } finally {
+        dispatch({ type: 'SET_LOADING', payload: false });
       }
     };
 
     fetchReviews();
   }, []);
 
-  if (loading) {
-    return <p className="text-center mt-4">Loading...</p>;
+  if (state.loading) {
+    return <LoadingSpinner />;
   }
 
-  if (error) {
-    return <p className="text-center text-red-500 mt-4">{error}</p>;
+  if (state.error) {
+    return (
+      <div className="text-center text-red-500 mt-4">
+        {state.error}
+        <button
+          onClick={() => window.location.reload()}
+          className="ml-4 text-blue-500 underline"
+        >
+          Coba lagi
+        </button>
+      </div>
+    );
   }
+
   return (
     <Layout
       titleHeader="TESTIMONI"
       background="bg-white"
-      spacing="space-y-0"
-      contentHeader={
-        <CarouselTestimoni data={data} />
-      }
+      spacing="space-y-8"
+      contentHeader={<CarouselTestimoni data={state.data} />}
       content={
-        <div>
-          <p className="py-4 text-xl font-bold mt-28" >Tuliskan Pendapat Anda Tentang TotalpIndah!</p>
-          <p>Terima kasih telah mendukung kami. Kami ingin mendengar tentang pengalaman Anda!
-            Umpan balik Anda membantu kami meningkatkan layanan kami. <br />
-            • Bagaimana pengalaman Anda menggunakan jasa angkut kami? <br />
-            • Apakah jasa kami sesuai dengan selera Anda?<br />
-            • Ada saran untuk kami?<br /><br />
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white rounded-lg shadow-sm p-8 space-y-6">
+            <h2 className="text-2xl font-bold text-gray-800 text-center">
+              Tuliskan Pendapat Anda Tentang TotalPindah!
+            </h2>
 
-            Tolong luangkan waktu sebentar untuk membagikan pendapat Anda. Hanya butuh beberapa menit, dan itu sangat berarti bagi kami!</p>
-          <div className="mx-auto">
-            {/* Star Rating */}
-            <div className="flex pt-10 justify-center mb-4">
+            <div className="text-gray-600 space-y-4">
+              <p className="text-center">
+                Terima kasih telah mendukung kami. Kami ingin mendengar tentang
+                pengalaman Anda! Umpan balik Anda membantu kami meningkatkan layanan
+                kami.
+              </p>
+
+              <div className="space-y-2">
+                <p>• Bagaimana pengalaman Anda menggunakan jasa angkut kami?</p>
+                <p>• Apakah jasa kami sesuai dengan selera Anda?</p>
+                <p>• Ada saran untuk kami?</p>
+              </div>
+
+              <p className="text-center italic">
+                Tolong luangkan waktu sebentar untuk membagikan pendapat Anda. Hanya
+                butuh beberapa menit, dan itu sangat berarti bagi kami!
+              </p>
+            </div>
+
+            <div className="flex justify-center mb-4">
               {[1, 2, 3, 4, 5].map((star) => (
                 <span
                   key={star}
-                  onMouseEnter={() => setHover(star)} // Hover efek
-                  onMouseLeave={() => setHover(0)}   // Reset hover
-                  onClick={() => setRating(star)}    // Set nilai rating
-                  className={`text-4xl cursor-pointer ${(hover || rating) >= star ? "text-yellow-400" : "text-gray-400"
+                  onMouseEnter={() => dispatch({ type: 'SET_HOVER', payload: star })}
+                  onMouseLeave={() => dispatch({ type: 'SET_HOVER', payload: 0 })}
+                  onClick={() => dispatch({ type: 'SET_RATING', payload: star })}
+                  className={`text-4xl cursor-pointer transition-colors duration-200 ${(state.hover || state.rating) >= star
+                    ? "text-yellow-400"
+                    : "text-gray-300"
                     }`}
                 >
                   ★
@@ -130,32 +145,26 @@ export default function TestimoniPage() {
               ))}
             </div>
 
-            {/* Input Feedback */}
             <div className="relative">
-
               <textarea
                 placeholder="Tulis pendapat Anda..."
-                value={feedback}
-                onChange={(e) => setFeedback(e.target.value)}
+                value={state.feedback}
+                onChange={(e) => dispatch({ type: 'SET_FEEDBACK', payload: e.target.value })}
                 name="feedback"
-                className="w-full p-3 -z-50 border rounded-md"
-
+                className="w-full p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 min-h-[150px] resize-none"
               ></textarea>
 
-              {/* Icon Send */}
               <button
                 onClick={handleSubmit}
-                className="absolute bottom-3 z-50 right-3 text-black"
-                disabled={disabled}
+                className="absolute bottom-4 right-4 text-gray-600 hover:text-blue-500 disabled:opacity-50 disabled:hover:text-gray-600 transition-colors duration-200"
+                disabled={state.disabled}
               >
                 <FiSend size={24} />
               </button>
             </div>
-
           </div>
         </div>
-
       }
     />
-  )
-};
+  );
+}

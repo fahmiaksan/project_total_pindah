@@ -1,6 +1,7 @@
 import React from "react";
-import Breadcrumbs from "./components/Breadcrumbs";
+import { ErrorBoundary } from './components/ErrorBoundary';
 import SEO from "./components/SEO";
+import Breadcrumbs from "./components/Breadcrumbs";
 
 interface Props {
   titleHeader?: string;
@@ -43,41 +44,43 @@ export default function Layout(props: Props) {
   return (
     <>
       <SEO {...seo} />
-      <main className={`
-        container mx-auto 
-        px-3 sm:px-6 md:px-8 lg:px-12 
-        my-8 sm:my-12 md:my-16 lg:my-20 
-        ${spacing ? spacing : 'space-y-8 sm:space-y-12'}
-      `}>
-        <Breadcrumbs />
+      <ErrorBoundary>
+        <main className={`
+          container mx-auto 
+          px-3 sm:px-6 md:px-8 lg:px-12 
+          my-8 sm:my-12 md:my-16 lg:my-20 
+          ${spacing ? spacing : 'space-y-8 sm:space-y-12'}
+        `}>
+          <Breadcrumbs />
 
-        <div className={`${background ? "space-y-0" : "space-y-6 sm:space-y-8 md:space-y-10"}`}>
-          {titleHeader && (
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black lg:tracking-widest">
-              {titleHeader}
-            </h1>
-          )}
+          <div className={`${background ? "space-y-0" : "space-y-6 sm:space-y-8 md:space-y-10"}`}>
+            {titleHeader && (
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black lg:tracking-widest">
+                {titleHeader}
+              </h1>
+            )}
 
-          {contentHeader && (
-            <div className={`
-              ${background ? background : 'bg-[#F2EE6F]'} 
-              rounded-tr-xl rounded-bl-xl 
-              ${padding ? padding : 'px-4 sm:px-6 md:px-8 py-6 sm:py-9'}
-            `}>
+            {contentHeader && (
               <div className={`
-                leading-relaxed tracking-wide text-base sm:text-lg
-                ${grid ? grid : ''}
+                ${background ? background : 'bg-[#F2EE6F]'} 
+                rounded-tr-xl rounded-bl-xl 
+                ${padding ? padding : 'px-4 sm:px-6 md:px-8 py-6 sm:py-9'}
               `}>
-                {contentHeader}
+                <div className={`
+                  leading-relaxed tracking-wide text-base sm:text-lg
+                  ${grid ? grid : ''}
+                `}>
+                  {contentHeader}
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
 
-        <div className="mt-8 md:mt-12">
-          {content}
-        </div>
-      </main>
+          <div className="mt-8 md:mt-12">
+            {content}
+          </div>
+        </main>
+      </ErrorBoundary>
     </>
   );
 };
