@@ -18,7 +18,7 @@ export default function Jumbotron() {
             Jasa layanan pindahan ini merupakan jasa yang melayani jasa pindah rumah, kantor, apartement, yang melayani ke antar kota dan keseluruh Indonesia dengan harga yang kompetitif namun tetap memiliki standar keselamatan dan keamanan pemindahan barang – barang ketempat yang ingin dituju baik didalam kota maupun diluar kota
           </p>
         </div>
-        {/* CTA Button */}
+        {/* Call to action Button */}
         <div className="w-full sm:w-max animate-fadeInUp delay-300">
           <div className="group pl-4 sm:pl-5 pr-16 sm:pr-24 flex items-center justify-between rounded-full relative py-3 text-white bg-gradient-to-r from-[#005CB5] to-[#0070dd] hover:from-[#0070dd] hover:to-[#005CB5] transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
             <Link to="/profile" className="text-sm sm:text-base whitespace-nowrap">

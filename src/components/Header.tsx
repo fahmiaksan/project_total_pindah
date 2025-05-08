@@ -3,7 +3,7 @@ import { IoMdMail } from "react-icons/io";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
-import MobileNavbar from "./Home/MobileNavbar";
+import MobileNavbar from "./Atoms/MobileNavbar";
 import { useState } from "react";
 
 

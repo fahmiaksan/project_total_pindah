@@ -589,3 +589,265 @@ Struktur:
 - Mempertahankan loading state sesuai requirement client
 - Animasi loading yang smooth dan profesional
 - Konsisten dengan brand identity
+
+## 📱 Struktur Halaman dan Pola Layout
+
+### Pola Umum Layout
+Setiap halaman menggunakan komponen `Layout` yang konsisten dengan struktur:
+```tsx
+<Layout
+  titleHeader="Judul Halaman"
+  background="bg-white"
+  spacing="space-y-8"
+  contentHeader={<Component />}
+  content={<Component />}
+/>
+```
+
+### 1. Halaman Beranda (Home)
+Struktur yang konsisten dengan 4 section utama:
+- Jumbotron (Hero section)
+- ContentHome (Konten utama)
+- WhyChoseUs (Keunggulan)
+- Galeri (Galeri foto)
+
+### 2. Halaman Profile
+Struktur yang konsisten dengan 4 section utama:
+- Jumbotron (Hero section)
+- Content (Konten utama)
+- Visi & Misi
+- Download (Company Profile)
+
+### 3. Halaman Layanan
+Setiap sub-halaman layanan (Rumah, Apartemen, Kantor, Luar Kota) memiliki struktur yang sama:
+- Title Header
+- Content Header (Deskripsi layanan)
+- Carousel (Galeri foto)
+
+### 4. Halaman Harga
+Struktur khusus:
+- Title Header
+- Content Header (Deskripsi harga)
+- Pricing Cards
+- Comparison Table
+
+### 5. Halaman Material
+Struktur khusus:
+- Title Header
+- Content Header (Deskripsi material)
+- Grid Cards (Material options)
+
+### 6. Halaman Galeri
+Struktur khusus:
+- Title Header
+- Grid Gallery
+- Carousel
+
+### 7. Halaman Testimoni
+Struktur khusus:
+- Title Header
+- Carousel Testimoni
+- Feedback Form
+
+### 8. Halaman Artikel
+Struktur khusus:
+- Title Header
+- Content Header (Deskripsi artikel)
+- Article Grid
+- Pagination
+
+### 9. Halaman Kontak
+Struktur khusus:
+- Title Header
+- Contact Information
+- Google Maps
+- Contact Form
+
+## 🎨 Pola Desain Konsisten
+
+### Warna Utama
+- Biru: `#005CB5` (Primary)
+- Merah: `#A90000` (Secondary)
+- Kuning: `#F2EE6F` (Accent)
+
+### Komponen yang Digunakan
+1. **Cards**
+   - SmallCard
+   - Card
+   - ArticleCard
+
+2. **Carousel**
+   - CarouselTestimoni
+   - Carousel
+
+3. **Forms**
+   - ContactForm
+   - FeedbackForm
+
+4. **Layout Components**
+   - Layout
+   - Header
+   - Footer
+   - SideContact
+
+### Responsive Design
+- Mobile-first approach
+- Breakpoints:
+  - sm: 640px
+  - md: 768px
+  - lg: 1024px
+  - xl: 1280px
+  - 2xl: 1536px
+
+### Spacing System
+- Container padding: `px-3 sm:px-6 md:px-8 lg:px-12`
+- Section margin: `my-8 sm:my-12 md:my-16 lg:my-20`
+- Component spacing: `space-y-8 sm:space-y-12`
+
+### Typography
+- Headings:
+  - H1: `text-2xl sm:text-3xl md:text-4xl lg:text-5xl`
+  - H2: `text-xl sm:text-2xl md:text-3xl lg:text-4xl`
+  - H3: `text-lg sm:text-xl md:text-2xl lg:text-3xl`
+- Body text: `text-base sm:text-lg`
+- Small text: `text-sm`
+
+### Animations
+- Hover effects pada cards dan buttons
+- Smooth transitions
+- Loading spinners
+- Carousel animations
+
+### Icons
+Menggunakan React Icons:
+- FiSend (Send icon)
+- FaWhatsapp (WhatsApp icon)
+- FaPhoneAlt (Phone icon)
+- FaMapMarkerAlt (Location icon)
+- Social media icons (Facebook, Twitter, Instagram, LinkedIn)
+
+## 🔧 State Management
+
+### Context Usage
+- NavContext: Mengelola state navigasi
+- FormContext: Mengelola state form
+- AuthContext: Mengelola state autentikasi
+
+### Reducer Pattern
+- formReducer: Mengelola state form dengan actions:
+  - SET_LOADING
+  - SET_ERROR
+  - SET_DATA
+  - SET_DISABLED
+  - RESET_FORM
+
+### Local Storage
+- lastSubmitTime: Menyimpan waktu submit terakhir
+- userPreferences: Menyimpan preferensi pengguna
+
+## 🚀 Performance Optimization
+
+### Code Splitting
+- Lazy loading untuk routes
+- Dynamic imports untuk komponen besar
+
+### Image Optimization
+- Lazy loading untuk images
+- Responsive images dengan srcset
+- WebP format support
+
+### Caching Strategy
+- Browser caching
+- Service worker caching
+- API response caching
+
+### Bundle Optimization
+- Tree shaking
+- Code splitting
+- Dynamic imports
+- Asset optimization
+
+## 📱 Mobile Responsiveness
+
+### Breakpoint Strategy
+```css
+sm: '640px'   /* Mobile landscape */
+md: '768px'   /* Tablet */
+lg: '1024px'  /* Desktop */
+xl: '1280px'  /* Large desktop */
+2xl: '1536px' /* Extra large desktop */
+```
+
+### Mobile-First Approach
+- Base styles untuk mobile
+- Media queries untuk larger screens
+- Flexible layouts
+- Responsive typography
+- Touch-friendly interactions
+
+### Responsive Components
+- Mobile navigation
+- Responsive tables
+- Flexible grids
+- Adaptive images
+- Touch-friendly buttons
+
+## 🔒 Security Measures
+
+### Form Security
+- Input validation
+- CSRF protection
+- XSS prevention
+- Rate limiting
+
+### API Security
+- API key protection
+- Request validation
+- Response sanitization
+- Error handling
+
+### Data Protection
+- Secure storage
+- Data encryption
+- Privacy policy
+- GDPR compliance
+
+## 🧪 Testing Strategy
+
+### Unit Tests
+- Component testing
+- Reducer testing
+- Utility function testing
+- Context testing
+
+### Integration Tests
+- Form submission
+- API integration
+- Navigation flow
+- State management
+
+### E2E Tests
+- User flows
+- Critical paths
+- Cross-browser testing
+- Mobile testing
+
+## 📈 Analytics & Monitoring
+
+### Performance Monitoring
+- Page load times
+- API response times
+- Error tracking
+- User behavior
+
+### SEO Analytics
+- Meta tags
+- Schema markup
+- Sitemap
+- Robots.txt
+
+### User Analytics
+- Page views
+- User flow
+- Conversion tracking
+- Event tracking

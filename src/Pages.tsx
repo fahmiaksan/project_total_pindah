@@ -1,13 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
-import SideContact from "./components/SideContact";
+import SideContact from "./components/Atoms/SideContact";
 import Footer from "./components/Footer";
-import Home from "./Home/Home";
-import Profile from "./Profile/Profile";
-import PindahanRumah from "./Layanan/PindahanRumah/Page";
-import PindahanApartmen from "./Layanan/PindahanApartment/Page";
-import PindahanKantor from "./Layanan/PindahanKantor/Page";
-import PindahanLuarKota from "./Layanan/PindahanLuarKota/page";
+import ProfilePage from "./Profile/Page";
+import PindahanRumahPage from "./Layanan/PindahanRumah/Page";
+import PindahanApartmenPage from "./Layanan/PindahanApartment/Page";
+import PindahanKantorPage from "./Layanan/PindahanKantor/Page";
+import PindahanLuarKotaPage from "./Layanan/PindahanLuarKota/Page";
 import HargaPage from "./Harga/Page";
 import MaterialPage from "./Material/Page";
 import GaleriPage from "./Galeri/Page";
@@ -17,17 +16,18 @@ import TestimoniPage from "./Testimoni/Page";
 import ArtikelPage from "./Artikel/Page";
 import ArtikelDetailPage from "./Artikel/ArtikelDetail/Page";
 import PanduanMemilihJasaPindahan from "./articles/PanduanMemilihJasaPindahan";
-import NotFound from './components/NotFound';
+import NotFound from './NotFound';
+import HomePage from "./Home/Page";
 
 export default function Pages() {
   const routes = [
-    { path: '/', element: <Home /> },
-    { path: '/beranda', element: <Home /> },
-    { path: '/profile', element: <Profile /> },
-    { path: '/jasa-pindahan-rumah', element: <PindahanRumah /> },
-    { path: '/jasa-pindahan-apartemen', element: <PindahanApartmen /> },
-    { path: '/jasa-pindahan-kantor', element: <PindahanKantor /> },
-    { path: '/jasa-pindahan-luar-kota-dan-antar-pulau', element: <PindahanLuarKota /> },
+    { path: '/', element: <HomePage /> },
+    { path: '/beranda', element: <HomePage /> },
+    { path: '/profile', element: <ProfilePage /> },
+    { path: '/jasa-pindahan-rumah', element: <PindahanRumahPage /> },
+    { path: '/jasa-pindahan-apartemen', element: <PindahanApartmenPage /> },
+    { path: '/jasa-pindahan-kantor', element: <PindahanKantorPage /> },
+    { path: '/jasa-pindahan-luar-kota-dan-antar-pulau', element: <PindahanLuarKotaPage /> },
     { path: '/harga', element: <HargaPage /> },
     { path: '/material', element: <MaterialPage /> },
     { path: '/galeri', element: <GaleriPage /> },

@@ -1,7 +1,7 @@
 import React from "react";
-import { ErrorBoundary } from './components/ErrorBoundary';
-import SEO from "./components/SEO";
-import Breadcrumbs from "./components/Breadcrumbs";
+import { ErrorBoundary } from './components/Atoms/ErrorBoundary';
+import SEO from "./components/Atoms/SEO";
+import Breadcrumbs from "./components/Atoms/Breadcrumbs";
 
 interface Props {
   titleHeader?: string;
@@ -19,6 +19,7 @@ interface Props {
     schema?: {
       '@context': string;
       '@type': string;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       [key: string]: any;
     };
   };

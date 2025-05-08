@@ -4,7 +4,7 @@ import Content from "../components/Profile/Content";
 import Visi_Misi from "../components/Profile/Visi_Misi";
 import Donwload from "../components/Profile/Donwload";
 
-export default function Profile() {
+export default function ProfilePage() {
   const content_misi = [
     "1. Memberikan pelayanan yang terbaik kepada penggunajasa",
     "2. Menghormati dan Menjalin hubungan baik dengan pengguna jasa agar terciptanya kepuasan",

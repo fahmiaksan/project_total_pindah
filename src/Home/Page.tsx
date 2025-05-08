@@ -1,10 +1,10 @@
 import Layout from "../Layout";
-import ContentHome from "../components/Home/Content";
+import ContentHome from "../components/Home/ContentHome";
 import Jumbotron from "../components/Home/Jumbotron";
-import Testimonial from "../components/Home/Testimonial";
+import Galeri from "../components/Home/Galeri";
 import WhyChoseUs from "../components/Home/WhyChoseUs";
 
-export default function Home() {
+export default function HomePage() {
   const homeSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -30,7 +30,7 @@ export default function Home() {
           <Jumbotron />
           <ContentHome />
           <WhyChoseUs />
-          <Testimonial />
+          <Galeri />
         </>
       }
     />

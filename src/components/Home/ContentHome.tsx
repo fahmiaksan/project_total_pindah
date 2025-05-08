@@ -5,7 +5,7 @@ export default function ContentHome() {
         <div className="flex px-14 flex-col gap-10 py-36">
           <div className="flex flex-col flex-1">
             <p className="text-black text-3xl font-bold">
-              Praktis, Cepat, dan Aman -
+              Praktis, Cepat -
               Solusi Pindahan Tanpa Beban!
             </p>
           </div>

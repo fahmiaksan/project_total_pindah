@@ -6,7 +6,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import './index.css'
 import Pages from './Pages.tsx';
 import { NavProvider } from './context/NavContext';
-import { ErrorBoundary } from './components/ErrorBoundary';
+import { ErrorBoundary } from './components/Atoms/ErrorBoundary.tsx';
+import emailjs from '@emailjs/browser';
+
+// Initialize EmailJS
+emailjs.init("qeg1I-wwbnPdtDkAk");
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
