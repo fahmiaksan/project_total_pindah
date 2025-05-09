@@ -853,52 +853,57 @@ xl: '1280px'  /* Large desktop */
 - Event tracking
 
 
-Flow Fitur Testimoni via EmailJS
-User buka halaman testimoni
-⤷ Komponen TestimoniPageComponent dirender, state diinisialisasi via useReducer.
+## 🧭 Flow Fitur Testimoni via EmailJS
 
-Ambil data testimoni sebelumnya (opsional)
-⤷ Gunakan fetch('/reviews.json') dan simpan di state.data.
+1. **User buka halaman testimoni**  
+   ⤷ Komponen `TestimoniPageComponent` dirender, state diinisialisasi via `useReducer`.
 
-User mengisi ulasan
-⤷ Rating bintang (1–5)
-⤷ Teks feedback (textarea)
+2. **Ambil data testimoni sebelumnya (opsional)**  
+   ⤷ Gunakan `fetch('/reviews.json')` dan simpan di `state.data`.
 
-Saat tombol "Kirim" ditekan:
+3. **User mengisi ulasan**  
+   ⤷ Rating bintang (1–5)  
+   ⤷ Teks feedback (textarea)
 
-Cek localStorage apakah sudah pernah submit hari ini
-⤷ Jika iya: tampilkan toast error dan hentikan
-⤷ Jika belum: lanjut proses kirim
+4. **Saat tombol "Kirim" ditekan:**
 
-Validasi input
-⤷ Rating harus > 0
-⤷ Feedback tidak boleh kosong
+   - **Cek `localStorage` apakah sudah pernah submit hari ini**  
+     ⤷ Jika **iya**: tampilkan toast error dan hentikan  
+     ⤷ Jika **belum**: lanjut proses kirim
 
-Set loading: true, disabled: true
+   - **Validasi input**  
+     ⤷ Rating harus > 0  
+     ⤷ Feedback tidak boleh kosong
 
-Kirim data ke EmailJS:
+   - **Set loading dan disabled button:**
+     ```ts
+     loading: true
+     disabled: true
+     ```
 
-ts
-Copy
-Edit
-emailjs.send(serviceID, templateID, {
-  rating: state.rating,
-  feedback: state.feedback
-}, publicKey)
-Jika berhasil:
+   - **Kirim data ke EmailJS:**
+     ```ts
+     emailjs.send(serviceID, templateID, {
+       rating: state.rating,
+       feedback: state.feedback
+     }, publicKey)
+     ```
 
-Set localStorage.setItem("lastSubmitTime", now)
+   - **Jika berhasil:**
+     - Simpan waktu submit ke localStorage:
+       ```ts
+       localStorage.setItem("lastSubmitTime", now)
+       ```
+     - Reset form (rating & feedback)
+     - Tampilkan toast sukses
+     - Tampilkan animasi konfirmasi atau alert
 
-Reset form (rating & feedback)
+   - **Jika gagal:**
+     - Set error di state
+     - Tampilkan toast error dengan pesan
 
-Tampilkan toast sukses
-
-Tampilkan animasi konfirmasi atau alert
-
-Jika gagal:
-
-Set error di state
-
-Tampilkan toast error dengan pesan
-
-Set loading: false, disabled: false
+   - **Akhir proses:**  
+     ```ts
+     loading: false
+     disabled: false
+     ```
