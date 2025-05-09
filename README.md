@@ -851,3 +851,115 @@ xl: '1280px'  /* Large desktop */
 - User flow
 - Conversion tracking
 - Event tracking
+
+
+# 📩 Fitur Ulasan (Testimoni) via EmailJS
+
+Fitur ini memungkinkan pengguna mengirim ulasan (testimoni) melalui form dan dikirim ke email via [EmailJS](https://www.emailjs.com/). Dilengkapi dengan validasi agar pengguna hanya bisa submit **1x per hari**.
+
+---
+
+## 📦 Instalasi
+
+```bash
+npm install emailjs-com axios react-toastify
+🧠 State Management dengan useReducer
+ts
+Copy
+Edit
+// reducers/formReducer.ts
+export const initialState = {
+  rating: 0,
+  hover: 0,
+  feedback: "",
+  disabled: false,
+  loading: false,
+  error: null,
+  data: {
+    author: [],
+    ratings: [],
+    reviews: []
+  }
+};
+
+export function formReducer(state, action) {
+  switch (action.type) {
+    case 'SET_RATING': return { ...state, rating: action.payload };
+    case 'SET_HOVER': return { ...state, hover: action.payload };
+    case 'SET_FEEDBACK': return { ...state, feedback: action.payload };
+    case 'SET_DISABLED': return { ...state, disabled: action.payload };
+    case 'SET_LOADING': return { ...state, loading: action.payload };
+    case 'SET_ERROR': return { ...state, error: action.payload };
+    case 'SET_DATA': return { ...state, data: action.payload };
+    case 'RESET_FORM': return { ...state, rating: 0, hover: 0, feedback: "" };
+    default: return state;
+  }
+}
+✉️ Kirim Email dengan EmailJS
+ts
+Copy
+Edit
+import emailjs from "emailjs-com";
+
+const templateParams = {
+  rating: state.rating,
+  feedback: state.feedback,
+};
+
+await emailjs.send(
+  "service_d68fix7",       // Service ID
+  "template_w7kck48",      // Template ID
+  templateParams,          // Data
+  "qeg1I-wwbnPdtDkAk"      // Public Key (User ID)
+);
+🔐 Pastikan template_w7kck48 memiliki variabel rating dan feedback.
+
+⛔ Batasi Submit 1x per Hari
+ts
+Copy
+Edit
+const lastSubmitTime = localStorage.getItem("lastSubmitTime");
+const currentTime = new Date().getTime();
+
+if (lastSubmitTime && currentTime - parseInt(lastSubmitTime) < 86400000) {
+  toast.error("Anda hanya dapat mengirim feedback sekali dalam 1 hari.");
+  return;
+}
+🧾 Komponen Form Ulasan
+tsx
+Copy
+Edit
+<textarea
+  placeholder="Tulis pendapat Anda..."
+  value={state.feedback}
+  onChange={(e) => dispatch({ type: 'SET_FEEDBACK', payload: e.target.value })}
+  className="w-full p-4 border rounded"
+/>
+
+<button onClick={handleSubmit} disabled={state.disabled}>
+  <FiSend size={24} />
+</button>
+🔄 Loading & Error
+Gunakan react-toastify untuk notifikasi.
+
+Saat loading, tampilkan spinner.
+
+Tampilkan error.message jika fetch data gagal.
+
+🎠 Menampilkan Ulasan
+Data ulasan ditarik dari public/reviews.json dan ditampilkan dalam komponen CarouselTestimoni.
+
+📁 Struktur Folder
+pgsql
+Copy
+Edit
+components/
+├── Pages/
+│   └── TestimoniPageComponent.tsx
+├── Atoms/
+│   ├── LoadingSpinner.tsx
+│   └── CarouselTestimoni.tsx
+reducers/
+└── formReducer.ts
+public/
+└── reviews.json
